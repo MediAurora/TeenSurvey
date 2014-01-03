@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="downloadApp" class="com.teensurvey.web.AppDownloadController">
+	</bean>
+    <bean id="download" class="com.teensurvey.web.DownloadController">
+	</bean>
+    <bean id="generate" class="com.teensurvey.web.ResultsController">
+	</bean>
+   	<bean id="userList" class="com.teensurvey.web.MasterController">
+	</bean>
+	<bean id="logout" class="com.teensurvey.web.LogoutController">
+	</bean>
+	<!--  
+	<bean id="userInfoValidator" class="com.teensurvey.web.UserInfoValidator">
+	</bean>
+	-->
+	<bean id="userInfo" class="com.teensurvey.web.UserInfoController">
+	</bean>
+	<bean id="survey" class="com.teensurvey.web.UserSurveyController">
+	</bean>
+	<bean id="logonValidator" class="com.teensurvey.web.LogonValidator">
+	</bean>
+	<bean id="logonForm" class="com.teensurvey.web.LogonFormController">
+		<property name="sessionForm">
+			<value>true</value>
+		</property>
+		<property name="commandName">
+			<value>credentials</value>
+		</property>
+		<property name="commandClass">
+			<value>com.teensurvey.business.Credentials</value>
+		</property>
+		<property name="validator">
+			<ref bean="logonValidator" />
+		</property>
+		<property name="formView">
+			<value>logon</value>
+		</property>
+		<property name="successView">
+			<value>home.htm</value>
+		</property>
+	</bean> 
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>messages</value>
+		</property>
+	</bean>
+	<!-- you can have more than one handler defined -->
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				<entry key="/home.htm">
+					<ref bean="userList" />
+				</entry>
+				<entry key="/index.htm">
+					<ref bean="logonForm" />
+				</entry>
+				<entry key="/logout.htm">
+					<ref bean="logout" />
+				</entry>
+				<entry key="/user.htm">
+					<ref bean="userInfo" />
+				</entry>
+				<entry key="/survey.htm">
+					<ref bean="survey" />
+				</entry>
+				<entry key="/generateSurvey.htm">
+					<ref bean="generate" />
+				</entry>
+				<entry key="/download.htm">
+					<ref bean="download" />
+				</entry>
+				<entry key="/downloadApp.htm">
+					<ref bean="downloadApp" />
+				</entry>
+			</map>
+		</property>
+	</bean> 
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+</beans>

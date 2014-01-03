@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="validatePatient" class="com.kidneyapp.web.PatInfoValidator">
+	</bean>
+	<bean id="master" class="com.kidneyapp.web.MasterController">
+		<property name="sessionForm">
+			<value>true</value>
+		</property>
+		<property name="commandName">
+			<value>patientInfo</value>
+		</property>
+		<property name="commandClass">
+			<value>com.kidneyapp.business.PatientInfo</value>
+		</property>
+		<property name="validator">
+			<ref bean="validatePatient" />
+		</property>
+		<property name="formView">
+			<value>landing</value>
+		</property>
+		<property name="successView">
+			<value>landing</value>
+		</property>
+	</bean>
+	<bean id="decide" class="com.kidneyapp.web.DecideController">
+	</bean>
+	<bean id="validateDrug" class="com.kidneyapp.web.DrugInfoValidator">
+	</bean>
+	<bean id="drugDose" class="com.kidneyapp.web.DrugDoseController">
+		<property name="sessionForm">
+			<value>true</value>
+		</property>
+		<property name="commandName">
+			<value>drugInfo</value>
+		</property>
+		<property name="commandClass">
+			<value>com.kidneyapp.business.DrugInfo</value>
+		</property>
+		<property name="validator">
+			<ref bean="validateDrug" />
+		</property>
+		<property name="formView">
+			<value>drugDose</value>
+		</property>
+		<property name="successView">
+			<value>drugDose</value>
+		</property>
+	</bean>
+	<bean id="safetyTips" class="com.kidneyapp.web.SafetyTipsController">
+	</bean>
+	<!--<bean id="ui" class="com.kidneyapp.web.JqueryUIController">
+	</bean>
+	<bean id="logonValidator" class="com.kidneyapp.web.LogonValidator">
+	</bean> -->
+	<!-- <bean id="logonForm" class="com.kidneyapp.web.LogonFormController">
+		<property name="sessionForm">
+			<value>true</value>
+		</property>
+		<property name="commandName">
+			<value>credentials</value>
+		</property>
+		<property name="commandClass">
+			<value>com.kidneyapp.business.Credentials</value>
+		</property>
+		<property name="validator">
+			<ref bean="logonValidator" />
+		</property>
+		<property name="formView">
+			<value>logon</value>
+		</property>
+		<property name="successView">
+			<value>home.htm</value>
+		</property>
+	</bean> -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>messages</value>
+		</property>
+	</bean>
+	<!-- you can have more than one handler defined -->
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				<entry key="/home.htm">
+					<ref bean="master" />
+				</entry>
+				<entry key="/logon.htm">
+					<ref bean="master" />
+				</entry>
+				<entry key="/decide.htm">
+					<ref bean="decide" />
+				</entry>
+				<entry key="/drugDose.htm">
+					<ref bean="drugDose" />
+				</entry>
+				<entry key="/safetyTips.htm">
+					<ref bean="safetyTips" />
+				</entry>
+			</map>
+		</property>
+	</bean> 
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+</beans>
